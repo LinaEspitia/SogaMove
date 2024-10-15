@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="ruta/a/tu/logo.png" alt="Logo de la Aplicación">
+        </div>
+        <h1>Nombre de la aplicación</h1>
+        <h2>Iniciar sesión</h2>
+
+        <form id="login-form">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" placeholder="Ingrese su correo electrónico" required>
+
+            <div class="btn-container">
+                <button type="submit" class="btn">Continuar</button>
+            </div>
+
+            <p class="policy">¿No tienes cuenta? <a href="/registro">Suscríbete</a></p>
+            <p class="separator">─────────── o ───────────</p>
+
+            <div class="btn-container">
+                <button type="button" class="btn google-btn">
+                    <img src="ruta/a/icono-google.png" alt="Google Icon" class="google-icon">
+                    Continuar con Google
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

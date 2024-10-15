@@ -1,12 +1,22 @@
-import React from 'react';
-import TrafficMap from './components/TrafficMap';
+document.addEventListener("DOMContentLoaded", function() {
+    const menu = document.getElementById('menu');
+    const menuContent = document.getElementById('menu-content');
 
-function App() {
-  return (
-    <div className="App">
-      <TrafficMap />
-    </div>
-  );
-}
+    menuContent.style.display = 'none';
 
-export default App;
+    menu.addEventListener('click', function(event) {
+        // Alternar la visibilidad del menú
+        menuContent.style.display = menuContent.style.display === 'block' ? 'none' : 'block';
+        event.stopPropagation();
+    });
+
+    document.addEventListener('click', function() {
+
+        menuContent.style.display = 'none';
+    });
+
+
+    menuContent.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+});

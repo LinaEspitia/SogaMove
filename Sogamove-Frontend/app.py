@@ -2,9 +2,17 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/')  # Ruta para la página principal
-def index():
+@app.route('/')
+def home():
     return render_template('index.html')
 
-if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=5000)  # Cambia el puerto si es necesario
+@app.route('/registro')
+def registrar_usuario():
+    return render_template('registro.html')
+
+@app.route('/ingresoUsuarios')
+def ingreso_usuarios():
+    return render_template('ingresoUsuarios.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
