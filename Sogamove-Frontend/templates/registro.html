@@ -9,61 +9,79 @@
 <body>
     <div class="container">
         <h1>SogaMove</h1>
-        <form>
-            <label for="documentType">Tipo de documento</label>
-            <select id="documentType" required>
-                <option value="">Seleccione</option>
-                <option value="CC">Cédula de ciudadanía</option>
-                <option value="CE">Cédula de extranjería</option>
-                <option value="TI">Tarjeta de identidad</option>
-            </select>
+<form id="registerForm">
+    <label for="documentType">Tipo de documento</label>
+    <select id="documentType" name="document_type" required>
+        <option value="">Seleccione</option>
+        <option value="CC">Cédula de ciudadanía</option>
+        <option value="CE">Cédula de extranjería</option>
+        <option value="TI">Tarjeta de identidad</option>
+    </select>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="birthDate">Fecha de nacimiento</label>
-                    <input type="date" id="birthDate" placeholder="dd/mm/aaaa" required>
-                </div>
-                <div class="form-group">
-                    <label for="expeditionDate">Fecha expedición</label>
-                    <input type="date" id="expeditionDate" placeholder="dd/mm/aaaa" required>
-                </div>
-            </div>
+    <label for="numberId">Numero de documento</label>
+    <input type="number" id="numberId" name="number_Id" required>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="firstName">Nombres</label>
-                    <input type="text" id="firstName" placeholder="Nombres" required>
-                </div>
-                <div class="form-group">
-                    <label for="secondName">Apellidos </label>
-                    <input type="text" id="secondName" placeholder="Apellidos">
-                </div>
-            </div>
+    <label for="birthDate">Fecha de nacimiento</label>
+    <input type="date" id="birthDate" name="birth_date" required>
 
-            <label for="email">Correo electrónico</label>
-            <input type="email" id="email" placeholder="Correo electrónico" required>
+    <label for="expeditionDate">Fecha expedición</label>
+    <input type="date" id="expeditionDate" name="expedition_date" required>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" placeholder="Contraseña" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirmPassword">Confirmar contraseña</label>
-                    <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" required>
-                </div>
-            </div>
+    <label for="firstName">Nombres</label>
+    <input type="text" id="firstName" name="first_name" required>
 
-            <div class="form-group checkbox">
-                <input type="checkbox" id="terms" required>
-                <label for="terms">Acepto la política de tratamiento de datos personales</label>
-            </div>
+    <label for="lastName">Apellidos</label>
+    <input type="text" id="lastName" name="last_name" required>
 
-            <div class="btn-container">
-                <button type="button" class="btn-secondary">Regresar</button>
-                <button type="submit" class="btn">Crear cuenta</button>
-            </div>
-        </form>
+    <label for="email">Correo electrónico</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Contraseña</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="confirmPassword">Confirmar contraseña</label>
+    <input type="password" id="confirmPassword" required>
+
+    <input type="checkbox" id="terms" required>
+    <label for="terms">Acepto la política de tratamiento de datos personales</label>
+
+    <button type="submit">Crear cuenta</button>
+</form>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevenir recarga de página.
+
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+
+        if (data.password !== document.getElementById('confirmPassword').value) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:5000/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert(result.message);
+            } else {
+                const error = await response.json();
+                alert(`Error: ${error.error}`);
+            }
+        } catch (error) {
+            console.error('Error al registrar usuario:', error);
+        }
+    });
+</script>
+
     </div>
 </body>
 </html>

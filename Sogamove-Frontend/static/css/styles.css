@@ -41,6 +41,7 @@ h2 {
 }
 
 input[type="email"],
+input[type="number"],
 input[type="password"],
 input[type="text"],
 input[type="date"],

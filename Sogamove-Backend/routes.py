@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from models import db, TravelHistory
+from models import db, User
 
 main_routes = Blueprint('main', __name__)
 
@@ -19,3 +20,27 @@ def add_travel():
 def get_travel_history():
     travels = TravelHistory.query.all()
     return jsonify([travel.to_dict() for travel in travels])
+
+
+@main_routes.route('/register', methods=['POST'])
+def register_user():
+    data = request.get_json()
+    try:
+        # Crear un nuevo usuario basado en los datos recibidos
+        new_user = User(
+            document_type=data['document_type'],
+            number_Id=data['number_Id'],
+            birth_date=data['birth_date'],
+            expedition_date=data['expedition_date'],
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            email=data['email'],
+            password=data['password']  # Considera hashear la contraseña.
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
+        return jsonify({"message": "Usuario registrado exitosamente"}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": "Error al registrar el usuario", "details": str(e)}), 400
