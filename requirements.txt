@@ -1,3 +1,5 @@
-Flask
-Flask-Cors
-gunicorn
+Flask==2.3.2
+Flask-SQLAlchemy==2.5.1
+psycopg2==2.9.3  # para conectar con PostgreSQL
+gunicorn==20.1.0  # para el servidor en producción
+Werkzeug==2.3.6
