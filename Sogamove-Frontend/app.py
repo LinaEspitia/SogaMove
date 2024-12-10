@@ -14,5 +14,21 @@ def registrar_usuario():
 def ingreso_usuarios():
     return render_template('ingresoUsuarios.html')
 
+@app.route('/usuarioRegistrado')
+def usuario_registrado():
+    return render_template('usuarioRegistrado.html')
+
+@app.route('/comentarios')
+def comentarios():
+    return render_template('comentarios.html')
+
+@app.route('/historial')
+def historial():
+    return render_template('historial.html')
+
+@app.route('/perfil')
+def perfil():
+    return render_template('perfil.html')
+
 if __name__ == '__main__':
     app.run(debug=True, port=3000)

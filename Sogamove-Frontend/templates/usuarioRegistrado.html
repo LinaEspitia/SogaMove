@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Rutas</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="static/css/stylesUser.css">
+</head>
+<body>
+
+    <!-- Mapa -->
+    <div id="map"></div>
+
+    <!-- Banda lateral izquierda (Menú de navegación) -->
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <a href="/perfil">Ver Perfil</a>
+            <a href="/historial">Historial de Viajes</a>
+            <a href="/comentarios">Comunidad</a>
+            <a href="/ajustes">Ajustes de Ruta</a>
+            <a href="/logout">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <!-- Panel de configuración de ruta -->
+    <div id="route-settings">
+        <h3>Configuración de Ruta</h3>
+        <label for="avoid-tolls">Evitar peajes</label>
+        <input type="checkbox" id="avoid-tolls">
+        <label for="fastest-route">Ruta más rápida</label>
+        <input type="checkbox" id="fastest-route">
+        <button id="save-settings">Guardar Preferencias</button>
+    </div>
+
+    <!-- Alertas de tráfico -->
+    <div id="traffic-alerts">
+        <h3>Alertas de Tráfico</h3>
+        <div id="alert-list"></div>
+    </div>
+
+    <!-- Historia de viajes -->
+    <div id="trip-history">
+        <h3>Historia de Viajes</h3>
+        <div id="history-list"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Inicializar mapa
+        const map = L.map('map').setView([4.6097100, -74.0817500], 13);
+
+        L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '&copy; <a href="https://www.google.com/intl/es_es/help/terms_maps.html">Google</a>'
+        }).addTo(map);
+
+        // Función para mostrar alertas de tráfico
+        function fetchTrafficAlerts() {
+            const alerts = [
+                { message: "Accidente en la calle 123", severity: "Alto" },
+                { message: "Congestión cerca de la Av. Carrera 7", severity: "Moderado" }
+            ];
+
+            const alertList = document.getElementById('alert-list');
+            alerts.forEach(alert => {
+                const alertItem = document.createElement('div');
+                alertItem.classList.add('alert');
+                alertItem.innerHTML = `<strong>${alert.severity}</strong>: ${alert.message}`;
+                alertList.appendChild(alertItem);
+            });
+        }
+
+        fetchTrafficAlerts();  // Llamar la función para mostrar alertas
+
+        // Función para guardar la configuración de ruta del usuario
+        document.getElementById('save-settings').addEventListener('click', () => {
+            const avoidTolls = document.getElementById('avoid-tolls').checked;
+            const fastestRoute = document.getElementById('fastest-route').checked;
+
+            // Aquí guardarías la configuración en el servidor o en localStorage, dependiendo de la implementación
+            alert(`Preferencias guardadas:\nEvitar peajes: ${avoidTolls}\nRuta más rápida: ${fastestRoute}`);
+        });
+
+        // Función para mostrar el historial de viajes
+        function fetchTripHistory() {
+            const history = [
+                { date: "2024-12-08", route: "Casa -> Oficina", time: "30 min" },
+                { date: "2024-12-07", route: "Oficina -> Centro Comercial", time: "20 min" }
+            ];
+
+            const historyList = document.getElementById('history-list');
+            history.forEach(trip => {
+                const tripItem = document.createElement('div');
+                tripItem.classList.add('trip');
+                tripItem.innerHTML = `<strong>${trip.date}</strong>: ${trip.route} - ${trip.time}`;
+                historyList.appendChild(tripItem);
+            });
+        }
+
+        fetchTripHistory();  // Llamar la función para mostrar historial
+
+    </script>
+</body>
+</html>

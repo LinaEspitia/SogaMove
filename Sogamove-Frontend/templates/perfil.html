@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - SogaMove</title>
+    <link rel="stylesheet" href="static/css/stylesPerfil.css">
+</head>
+<body>
+
+    <!-- Barra Lateral -->
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <a href="/perfil">Ver Perfil</a>
+            <a href="/historial">Historial de Viajes</a>
+            <a href="/comentarios">Comunidad</a>
+            <a href="/ajustes">Ajustes de Ruta</a>
+            <a href="/logout">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <!-- Sección de Perfil -->
+    <div id="profile-container">
+        <h1>Mi Perfil</h1>
+
+        <!-- Mostrar datos de perfil -->
+        <form id="profileForm">
+            <label for="documentType">Tipo de documento</label>
+            <select id="documentType" name="document_type" disabled>
+                <option value="CC">Cédula de ciudadanía</option>
+                <option value="CE">Cédula de extranjería</option>
+                <option value="TI">Tarjeta de identidad</option>
+            </select>
+
+            <label for="numberId">Número de documento</label>
+            <input type="number" id="numberId" name="number_Id" required disabled>
+
+            <label for="birthDate">Fecha de nacimiento</label>
+            <input type="date" id="birthDate" name="birth_date" required>
+
+            <label for="expeditionDate">Fecha de expedición</label>
+            <input type="date" id="expeditionDate" name="expedition_date" required>
+
+            <label for="firstName">Nombres</label>
+            <input type="text" id="firstName" name="first_name" required>
+
+            <label for="lastName">Apellidos</label>
+            <input type="text" id="lastName" name="last_name" required>
+
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" required disabled>
+
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password">
+
+            <label for="confirmPassword">Confirmar contraseña</label>
+            <input type="password" id="confirmPassword" required>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
+
+    <script>
+        // Este script se encarga de mostrar los datos actuales del usuario y enviar los cambios
+
+        // Obtener los datos del perfil del usuario desde el servidor (simulación)
+        async function loadUserProfile() {
+            try {
+                const response = await fetch('http://localhost:5000/profile', { method: 'GET' });
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById('documentType').value = data.document_type;
+                    document.getElementById('numberId').value = data.number_Id;
+                    document.getElementById('birthDate').value = data.birth_date;
+                    document.getElementById('expeditionDate').value = data.expedition_date;
+                    document.getElementById('firstName').value = data.first_name;
+                    document.getElementById('lastName').value = data.last_name;
+                    document.getElementById('email').value = data.email;
+                } else {
+                    alert('No se pudo cargar el perfil.');
+                }
+            } catch (error) {
+                console.error('Error al cargar el perfil:', error);
+            }
+        }
+
+        // Guardar los cambios de perfil
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            if (data.password !== document.getElementById('confirmPassword').value) {
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/profile/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message);
+                } else {
+                    const error = await response.json();
+                    alert(`Error: ${error.error}`);
+                }
+            } catch (error) {
+                console.error('Error al actualizar el perfil:', error);
+            }
+        });
+
+        // Cargar el perfil al inicio
+        loadUserProfile();
+    </script>
+
+</body>
+</html>

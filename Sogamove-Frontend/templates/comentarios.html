@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidad - SogaMove</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="static/css/stylesComentarios.css">
+</head>
+<body>
+
+    <!-- Barra Lateral -->
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <a href="/perfil">Ver Perfil</a>
+            <a href="/historial">Historial de Viajes</a>
+            <a href="/comunidad">Comunidad</a>
+            <a href="/ajustes">Ajustes de Ruta</a>
+            <a href="/logout">Cerrar Sesión</a>
+        </div>
+    </div>
+
+    <!-- Mapa -->
+    <div id="map"></div>
+
+    <!-- Sección de Comentarios -->
+    <div id="comments-section">
+        <div id="comments-list">
+            <div class="comment">
+                <div class="comment-header">
+                    <span class="username">Usuario1</span>
+                    <span class="time">Hace 10 minutos</span>
+                </div>
+                <div class="comment-body">
+                    <p>Accidente en la calle 123, hay mucho tráfico.</p>
+                </div>
+            </div>
+
+            <div class="comment">
+                <div class="comment-header">
+                    <span class="username">Usuario2</span>
+                    <span class="time">Hace 30 minutos</span>
+                </div>
+                <div class="comment-body">
+                    <p>Congestión cerca de la Av. Carrera 7, mejor tomar otra ruta.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="new-comment">
+            <textarea placeholder="Deja tu comentario..." rows="3"></textarea>
+            <button id="post-comment">Publicar</button>
+        </div>
+    </div>
+
+    <script src="static/js/App.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</body>
+</html>
