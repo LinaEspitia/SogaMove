@@ -25,6 +25,8 @@ app.config['SQLALCHEMY_BINDS'] = {
     'postgres': app.config['POSTGRES_URI']
 }
 
+app.secret_key = 'SogaMove'
+
 CORS(app)
 
 # Inicializar SQLAlchemy para ambas bases de datos

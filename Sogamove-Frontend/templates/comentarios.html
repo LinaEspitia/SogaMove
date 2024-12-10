@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comunidad - SogaMove</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <link rel="stylesheet" href="static/css/stylesComentarios.css">
+    <title>Historial de Viajes - SogaMove</title>
+    <link rel="stylesheet" href="static/css/stylesHistorial.css">
 </head>
 <body>
 
@@ -14,46 +13,43 @@
         <div id="sidebar-content">
             <a href="/perfil">Ver Perfil</a>
             <a href="/historial">Historial de Viajes</a>
-            <a href="/comunidad">Comunidad</a>
+            <a href="/comentarios">Comunidad</a>
             <a href="/ajustes">Ajustes de Ruta</a>
             <a href="/logout">Cerrar Sesión</a>
         </div>
     </div>
 
-    <!-- Mapa -->
-    <div id="map"></div>
+    <!-- Contenedor del Historial -->
+    <div id="history-container">
+        <h1>Historial de Viajes</h1>
 
-    <!-- Sección de Comentarios -->
-    <div id="comments-section">
-        <div id="comments-list">
-            <div class="comment">
-                <div class="comment-header">
-                    <span class="username">Usuario1</span>
-                    <span class="time">Hace 10 minutos</span>
-                </div>
-                <div class="comment-body">
-                    <p>Accidente en la calle 123, hay mucho tráfico.</p>
-                </div>
+        <div class="history-item">
+            <div class="history-header">
+                <span class="date">2024-12-08</span>
+                <span class="route">Casa -> Oficina</span>
             </div>
-
-            <div class="comment">
-                <div class="comment-header">
-                    <span class="username">Usuario2</span>
-                    <span class="time">Hace 30 minutos</span>
-                </div>
-                <div class="comment-body">
-                    <p>Congestión cerca de la Av. Carrera 7, mejor tomar otra ruta.</p>
-                </div>
+            <div class="history-body">
+                <p><strong>Duración:</strong> 30 minutos</p>
+                <p><strong>Distancia:</strong> 10 km</p>
             </div>
         </div>
 
-        <div id="new-comment">
-            <textarea placeholder="Deja tu comentario..." rows="3"></textarea>
-            <button id="post-comment">Publicar</button>
+        <div class="history-item">
+            <div class="history-header">
+                <span class="date">2024-12-07</span>
+                <span class="route">Oficina -> Centro Comercial</span>
+            </div>
+            <div class="history-body">
+                <p><strong>Duración:</strong> 20 minutos</p>
+                <p><strong>Distancia:</strong> 7 km</p>
+            </div>
         </div>
+
     </div>
 
-    <script src="static/js/App.js"></script>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Scripts -->
+   <script src="static/js/comments.js"></script>
+
+
 </body>
 </html>

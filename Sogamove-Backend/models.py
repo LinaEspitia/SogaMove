@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -28,3 +29,19 @@ class User(db.Model):
     last_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    user_Id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    username = db.Column(db.String(100), nullable=False)  # Guarda el nombre del usuario
+    content = db.Column(db.Text, nullable=False)  # Contenido del comentario
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)  # Marca de tiempo
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "content": self.content,
+            "timestamp": self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        }

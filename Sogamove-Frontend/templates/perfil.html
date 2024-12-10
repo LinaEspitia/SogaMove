@@ -60,66 +60,29 @@
         </form>
     </div>
 
-    <script>
-        // Este script se encarga de mostrar los datos actuales del usuario y enviar los cambios
-
-        // Obtener los datos del perfil del usuario desde el servidor (simulación)
-        async function loadUserProfile() {
-            try {
-                const response = await fetch('http://localhost:5000/profile', { method: 'GET' });
-                const data = await response.json();
-                if (response.ok) {
-                    document.getElementById('documentType').value = data.document_type;
-                    document.getElementById('numberId').value = data.number_Id;
-                    document.getElementById('birthDate').value = data.birth_date;
-                    document.getElementById('expeditionDate').value = data.expedition_date;
-                    document.getElementById('firstName').value = data.first_name;
-                    document.getElementById('lastName').value = data.last_name;
-                    document.getElementById('email').value = data.email;
-                } else {
-                    alert('No se pudo cargar el perfil.');
-                }
-            } catch (error) {
-                console.error('Error al cargar el perfil:', error);
+   <script>
+    async function loadUserProfile() {
+        try {
+            const response = await fetch('http://localhost:5000/perfil', { method: 'GET' });
+            const data = await response.json();
+            if (response.ok) {
+                document.getElementById('documentType').value = data.document_type;
+                document.getElementById('numberId').value = data.number_Id;
+                document.getElementById('birthDate').value = data.birth_date;
+                document.getElementById('expeditionDate').value = data.expedition_date;
+                document.getElementById('firstName').value = data.first_name;
+                document.getElementById('lastName').value = data.last_name;
+                document.getElementById('email').value = data.email;
+            } else {
+                alert('No se pudo cargar el perfil.');
             }
+        } catch (error) {
+            console.error('Error al cargar el perfil:', error);
         }
+    }
 
-        // Guardar los cambios de perfil
-        document.getElementById('profileForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-
-            if (data.password !== document.getElementById('confirmPassword').value) {
-                alert('Las contraseñas no coinciden');
-                return;
-            }
-
-            try {
-                const response = await fetch('http://localhost:5000/profile/update', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    alert(result.message);
-                } else {
-                    const error = await response.json();
-                    alert(`Error: ${error.error}`);
-                }
-            } catch (error) {
-                console.error('Error al actualizar el perfil:', error);
-            }
-        });
-
-        // Cargar el perfil al inicio
-        loadUserProfile();
-    </script>
+    loadUserProfile();
+</script>
 
 </body>
 </html>
